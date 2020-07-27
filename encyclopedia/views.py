@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from . import util
+import markdown2
 
 
 def index(request):
@@ -9,6 +10,12 @@ def index(request):
     })
 
 def entry(request, name):
-    return render(request, "encyclopedia/test.html", {
-        "name": name
-    })
+    soup = util.get_entry(name)
+    if soup == None:
+        return render(request, "encyclopedia/error.html", {
+            "name": name
+            })
+    else:
+        return render(request, "encyclopedia/entry.html", {
+            "name": name, "content": markdown2.markdown(soup)
+            })
