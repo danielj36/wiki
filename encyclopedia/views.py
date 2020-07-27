@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.http import HttpResponse
 from . import util
 
 
@@ -8,3 +8,7 @@ def index(request):
         "entries": util.list_entries()
     })
 
+def entry(request, name):
+    return render(request, "encyclopedia/test.html", {
+        "name": name
+    })
