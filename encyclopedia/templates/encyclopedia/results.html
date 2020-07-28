@@ -6,11 +6,16 @@
 
 {% block body %}
     <h1>Results</h1>
-
     <ul>
-        {% for entry in results %}
+        {% if not results %}
+
+          <li>No results found.</li>
+
+        {% else %}
+          {% for entry in results %}
             <li><a href="wiki/{{ entry }}">{{ entry }}</a></li>
-        {% endfor %}
+          {% endfor %}
+        {% endif %}
     </ul>
 
 {% endblock %}

@@ -22,22 +22,16 @@ def entry(request, name):
             })
 
 def search(request):
-    match = False
     query = request.GET["q"]
     all_entries = util.list_entries()
     partial_matches = []
     for x in all_entries:
         if query == x:
-            match = True
+            return redirect("wiki/"+query)
         elif query in x:
             partial_matches.append(x)
         else:
             continue
-    if match:
-        return redirect("wiki/"+query)
-    elif partial_matches == []:
-        return render(request, "encyclopedia/noresults.html")
-    else:
-        return render(request, "encyclopedia/results.html", {
-            "results": partial_matches
-            })
+    return render(request, "encyclopedia/results.html", {
+        "results": partial_matches
+        })
