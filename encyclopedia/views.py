@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.shortcuts import redirect
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from . import util
 import markdown2
 
@@ -27,7 +27,7 @@ def search(request):
     partial_matches = []
     for x in all_entries:
         if query == x:
-            return redirect("wiki/"+query)
+            return HttpResponseRedirect("wiki/"+query)
         elif query in x:
             partial_matches.append(x)
         else:
