@@ -30,7 +30,7 @@ def search(request):
         if query == x:
             match = True
         elif query in x:
-            partial_matches += x
+            partial_matches.append(x)
         else:
             continue
     if match:
