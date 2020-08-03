@@ -3,7 +3,11 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from . import util
 import markdown2
+from django import forms
 
+class NewEntryForm(forms.Form):
+    title = forms.CharField(label="Entry Title")
+    content = forms.CharField(label="Entry Content", widget=forms.Textarea())
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -35,3 +39,8 @@ def search(request):
     return render(request, "encyclopedia/results.html", {
         "results": partial_matches
         })
+
+def newentry(request):
+    return render(request, "encyclopedia/newentry.html", {
+        "form": NewEntryForm()
+    })
