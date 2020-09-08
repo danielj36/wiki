@@ -1,10 +1,11 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-    {{ name }}
+    Error: Article already exists
 {% endblock %}
 
 {% block body %}
-    {{ content|safe }}
-    <a href="">Edit</a>
+    <h3>Error: {{ title }} already exists.</h3>
+
+
 {% endblock %}

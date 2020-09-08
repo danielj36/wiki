@@ -26,13 +26,13 @@ def entry(request, name):
             })
 
 def search(request):
-    query = request.GET["q"]
+    query = request.GET["q"].lower()
     all_entries = util.list_entries()
     partial_matches = []
     for x in all_entries:
-        if query == x:
-            return HttpResponseRedirect("wiki/"+query)
-        elif query in x:
+        if query == x.lower():
+            return HttpResponseRedirect("wiki/"+x)
+        elif query in x.lower():
             partial_matches.append(x)
         else:
             continue
@@ -41,6 +41,21 @@ def search(request):
         })
 
 def newentry(request):
+    if request.method == "POST":
+        form = NewEntryForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+            if util.check_entry(title):
+                return render(request, "encyclopedia/creationerror.html", {
+                    "title": title
+                    })
+            util.save_entry(title, content)
+            return HttpResponseRedirect("wiki/"+title)
+        else:
+            return render(request, "encyclopedia/newentry.html", {
+                "form": form
+                })
     return render(request, "encyclopedia/newentry.html", {
         "form": NewEntryForm()
     })

@@ -24,6 +24,12 @@ def save_entry(title, content):
         default_storage.delete(filename)
     default_storage.save(filename, ContentFile(content))
 
+def check_entry(title):
+    filename = f"entries/{title}.md"
+    if default_storage.exists(filename):
+        return True
+    else:
+        return False
 
 def get_entry(title):
     """

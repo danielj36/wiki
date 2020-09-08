@@ -6,7 +6,7 @@
 
 {% block body %}
     <h1>Create New Entry</h1>
-    <form>
+    <form action="{% url 'newentry' %}" method= "post">
       {% csrf_token %}
       <body>
         {{ form }}
